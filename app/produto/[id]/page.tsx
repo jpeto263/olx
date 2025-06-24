@@ -672,7 +672,19 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     return () => window.removeEventListener("resize", checkDescriptionOverflow)
   }, [product?.description])
 
-  // Remove loading screen - let content render immediately
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin h-8 w-8 border-2 border-gray-300 border-t-orange-500 rounded-full mx-auto mb-4"></div>
+          <p>Carregando produto...</p>
+          <Button onClick={() => router.push("/")} variant="outline" className="mt-4">
+            Voltar ao início
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
   const locationParts = product.location.split(" - ")
   const city = locationParts[0] || "Salvador"
@@ -1740,7 +1752,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
               <div className="flex items-center justify-between">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-18%20at%2003.04.27-aFi87zHmAxirJ8anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-18%20at%2003.04.27-aFi87zHmAxirJ8dawMMRGioxBQwRIa.jpeg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-18%20at%2003.04.27-aFi87zHmAxirJ8dawMMRGioxBQwRIa.jpeg"
                   alt="OLX"
                   width={60}
                   height={32}
@@ -1767,7 +1779,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="flex justify-center mb-4 sm:mb-6">
               <div className="w-64 h-64 sm:w-80 sm:h-80 bg-white border border-gray-200 rounded-lg p-3 sm:p-4 flex items-center justify-center">
                 <Image
-                  src={pixPaymentData.qrCode || "/placeholder.svg"}
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-18%20at%2011.13.14-nPdxXyOFFYzf6wlWJSE0bMHoTFSwno.jpeg"
                   alt="QR Code Pix"
                   width={300}
                   height={300}
@@ -2086,7 +2098,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </button>
               </div>
 
-              {/* Calcular Shipping */}
+              {/* Calculate Shipping */}
               <div className="px-4 py-4 border-t border-gray-100">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
                   <h3 className="text-base sm:text-lg font-medium text-black">Calcule o frete</h3>
@@ -2133,7 +2145,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <div className="px-4 py-4 border-t border-gray-100" data-buy-button>
                 <div className="space-y-3 mb-4">
                   <Button
-                    className="w-full bg-[#FF6600] hover:bg-[#e55a00] text-white font-semibold py-3 sm:py-4 px-6 h-12 sm:h-14 rounded-full text-base"
+                    className="w-full bg-[#FF6600] hover:bg-[#e55a00] text-white font-semibold py-3 sm:py-4 px-6 h-12 sm:h-14 rounded-full text-base sm:text-lg"
                     onClick={handleBuyClick}
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
@@ -2141,7 +2153,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full border-2 border-[#FF6600] text-[#FF6600] hover:bg-orange-50 font-semibold py-3 sm:py-4 px-6 h-12 sm:h-14 rounded-full text-base"
+                    className="w-full border-2 border-[#FF6600] text-[#FF6600] hover:bg-orange-50 font-semibold py-3 sm:py-4 px-6 h-12 sm:h-14 rounded-full text-base sm:text-lg"
                     onClick={handleChatClick}
                   >
                     <MessageCircle className="w-5 h-5 mr-2" />
@@ -2166,6 +2178,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 )}
               </div>
 
+              {/* Detalhes */}
               {/* Detalhes */}
               <div className="px-4 py-4 border-t border-gray-100">
                 <h3 className="text-base sm:text-lg font-bold text-black mb-4">Detalhes</h3>
@@ -2440,22 +2453,19 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-black mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
                   <div className="text-sm sm:text-base font-bold text-black mb-1">Parcelamento sem juros</div>
-                  <div className="text-sm sm:text-base text-black mb-2">
-                    Parcele em até 3x sem juros no cartão de crédito.
+                  <div className="text-sm sm:text-base text-black">
+                    Parcele suas compras sem juros no cartão de crédito.
                   </div>
-                  <button className="text-sm sm:text-base text-[#A74EFF] hover:underline font-medium min-h-[44px] flex items-center">
-                    Saiba mais
-                  </button>
                 </div>
               </div>
 
-              {/* Entrega Fácil */}
+              {/* Entrega fácil */}
               <div className="flex items-start gap-3">
                 <Package className="w-5 h-5 sm:w-6 sm:h-6 text-black mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
-                  <div className="text-sm sm:text-base font-bold text-black mb-1">Entrega Fácil</div>
+                  <div className="text-sm sm:text-base font-bold text-black mb-1">Entrega fácil</div>
                   <div className="text-sm sm:text-base text-black mb-2">
-                    Receba o produto em casa com segurança e praticidade.
+                    Receba ou retire seu produto onde quiser com segurança.
                   </div>
                   <button className="text-sm sm:text-base text-[#A74EFF] hover:underline font-medium min-h-[44px] flex items-center">
                     Saiba mais
@@ -2467,222 +2477,222 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      {/* Produtos Relacionados */}
-      {relatedProducts.length > 0 && (
-        <div className="bg-white px-4 py-6 border-t border-gray-100">
-          <div className="container mx-auto max-w-7xl">
-            <h3 className="text-lg sm:text-xl font-bold text-black mb-4">Produtos relacionados</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-              {relatedProducts.map((relatedProduct) => (
+      {/* Horizontal separator line */}
+      <div className="w-full h-px bg-[#E5E5E5]"></div>
+
+      {/* Horizontal separator line */}
+      <div className="w-full h-px bg-[#E5E5E5]"></div>
+
+      {/* Dicas de segurança - Security Tips Section */}
+      <div className="bg-white px-4 py-6">
+        <div className="container mx-auto max-w-7xl">
+          <h3 className="text-lg sm:text-xl font-bold text-black mb-4">Dicas de segurança</h3>
+          <div className="bg-white border border-[#E5E5E5] rounded-lg p-4 sm:p-6 mb-4">
+            <p className="text-sm sm:text-base text-black leading-relaxed">
+              Não faça pagamentos antes de verificar o que está sendo anunciado.
+            </p>
+          </div>
+
+          {/* Denunciar anúncio link */}
+          <button className="flex items-center gap-2 text-[#A74EFF] hover:underline min-h-[44px]">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z" />
+            </svg>
+            <span className="text-sm sm:text-base font-medium">Denunciar anúncio</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Horizontal separator line */}
+      <div className="w-full h-px bg-[#E5E5E5]"></div>
+
+      {/* Também podem te interessar - Related Products Section */}
+      <div className="bg-white px-4 py-6">
+        <div className="container mx-auto max-w-7xl">
+          <h3 className="text-lg sm:text-xl font-bold text-black mb-4">Também podem te interessar</h3>
+
+          {/* Product Carousel - Mobile First Design */}
+          <div className="relative">
+            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory">
+              {relatedProducts.slice(0, 8).map((relatedProduct, index) => (
                 <div
-                  key={relatedProduct.id}
-                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                  key={index}
                   onClick={() => handleRelatedProductClick(relatedProduct)}
+                  className="w-[calc(50%-6px)] sm:w-64 flex-shrink-0 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer transition-transform hover:scale-105 snap-start relative"
                 >
-                  <div className="aspect-square w-full bg-gray-50">
+                  {/* Product Image */}
+                  <div className="aspect-[4/3] relative">
                     <Image
                       src={relatedProduct.image || "/placeholder.svg?height=200&width=200&text=Produto"}
                       alt={relatedProduct.title}
-                      width={200}
-                      height={200}
-                      className="w-full h-full object-contain"
+                      width={256}
+                      height={192}
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-3">
-                    <h4 className="text-sm font-medium text-black mb-2 line-clamp-2 h-10">{relatedProduct.title}</h4>
-                    <div className="text-base font-bold text-black mb-1">{formatPrice(relatedProduct.price)}</div>
-                    {relatedProduct.originalPrice && (
-                      <div className="text-sm text-gray-500 line-through mb-1">
-                        {formatPrice(relatedProduct.originalPrice)}
-                      </div>
-                    )}
-                    <div className="text-xs text-gray-500 mb-1">{relatedProduct.location}</div>
-                    <div className="text-xs text-gray-500">{relatedProduct.date}</div>
-                    {relatedProduct.badge && (
-                      <div className="mt-2">
-                        <span className="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">
-                          {relatedProduct.badge}
-                        </span>
-                      </div>
-                    )}
+
+                  {/* Product Info */}
+                  <div className="p-3 relative">
+                    {/* Price */}
+                    <div className="text-lg font-bold text-black mb-1">{formatPrice(relatedProduct.price)}</div>
+
+                    {/* Product Title */}
+                    <h4 className="text-sm font-normal text-black line-clamp-2 mb-3 leading-tight">
+                      {relatedProduct.title}
+                    </h4>
+
+                    {/* Garantia da OLX Badge */}
+                    <div className="mb-3">
+                      <span className="inline-block bg-[#f4e8ff] text-[#8b5cf6] text-xs font-medium px-2 py-1 rounded-md">
+                        Garantia da OLX
+                      </span>
+                    </div>
+
+                    {/* Location and Date */}
+                    <div className="flex items-center text-xs text-gray-500 mb-2">
+                      <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span className="truncate">
+                        {relatedProduct.location.split(" - ")[0]} ... {relatedProduct.date},{" "}
+                        {new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
+                      </span>
+                    </div>
+
+                    {/* Heart Icon - Favorite */}
+                    <button
+                      className="absolute bottom-3 right-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        // Handle favorite toggle
+                      }}
+                    >
+                      <svg
+                        className="w-4 h-4 text-gray-400 hover:text-red-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      )}
-
-      {/* Fullscreen Image Modal */}
-      {showFullscreenImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-          <div className="relative w-full h-full flex items-center justify-center">
-            <button
-              onClick={() => setShowFullscreenImage(false)}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-10 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
-            >
-              <X className="h-6 w-6" />
-            </button>
-
-            <div className="relative w-full h-full flex items-center justify-center">
-              <Image
-                src={product.images[currentImageIndex] || "/placeholder.svg?height=400&width=400&text=Sem+Imagem"}
-                alt={`${product.title} - Imagem ${currentImageIndex + 1}`}
-                width={800}
-                height={800}
-                className="max-w-full max-h-full object-contain"
-              />
-
-              {product.images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                  >
-                    <ArrowLeft className="h-6 w-6" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                  >
-                    <ArrowLeft className="h-6 w-6 rotate-180" />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Image counter */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">
-              {currentImageIndex + 1} / {product.images.length}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Bottom Navigation - Mobile Only */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-30">
-        <div className="flex items-center justify-between px-4 py-2">
-          {/* Início */}
-          <button
-            onClick={() => router.push("/")}
-            className={`flex flex-col items-center justify-center py-2 px-3 min-h-[60px] ${
-              activeMobileTab === "inicio" ? "text-[#FF6600]" : "text-gray-500"
-            }`}
-          >
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
-            <span className="text-xs">Início</span>
-          </button>
-
-          {/* Comprar */}
-          <button
-            onClick={handleBuyClick}
-            className="flex-1 mx-2 bg-[#FF6600] hover:bg-[#e55a00] text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center min-h-[48px]"
-          >
-            <ShoppingCart className="w-5 h-5 mr-2" />
-            <span className="text-base">Comprar</span>
-          </button>
-
-          {/* Chat */}
-          <button
-            onClick={handleChatClick}
-            className="flex flex-col items-center justify-center py-2 px-3 min-h-[60px] text-gray-500 border border-[#FF6600] rounded-full"
-          >
-            <MessageCircle className="w-6 h-6 text-[#FF6600]" />
-          </button>
-        </div>
       </div>
-
-      {/* Desktop Sidebar - Hidden on mobile */}
-      <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-80 z-20">
-        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
-          {/* Price */}
-          <div className="text-3xl font-bold text-black mb-4">{product.price}</div>
-
-          {/* Payment Methods */}
-          <div className="flex items-center gap-2 mb-4">
-            {renderPaymentMethods(product.payment_methods || []).map((icon, index) => (
-              <div
-                key={index}
-                className="w-10 h-10 border border-gray-200 rounded-full overflow-hidden flex items-center justify-center"
+      {/* Mobile Bottom Navigation Bar - Product Page */}
+      {!showPurchaseModal && (
+        <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 sm:hidden">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-center justify-between gap-3">
+              {/* Início Button */}
+              <button
+                onClick={() => router.push("/")}
+                className="flex flex-col items-center justify-center min-w-[60px] py-2"
               >
-                {icon}
-              </div>
-            ))}
-          </div>
+                <svg className="w-6 h-6 text-[#FF6600] mb-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span className="text-xs text-[#FF6600] font-medium">Início</span>
+              </button>
 
-          {/* Installments */}
-          <div className="text-lg font-normal text-black mb-2">
-            {installments}x sem juros de R$ {value}
-          </div>
-          <button className="text-[#6A1B9A] text-sm font-medium mb-6 hover:underline">
-            Mais opções de parcelamento
-          </button>
+              {/* Comprar Button */}
+              <Button
+                className="flex-1 bg-[#FF6600] hover:bg-[#e55a00] text-white font-semibold py-3 px-6 h-12 rounded-full text-base mx-2"
+                onClick={handleBuyClick}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Comprar
+              </Button>
 
-          {/* Action Buttons */}
-          <div className="space-y-3 mb-6">
-            <Button
-              className="w-full bg-[#FF6600] hover:bg-[#e55a00] text-white font-semibold py-4 px-6 h-14 rounded-full text-lg"
-              onClick={handleBuyClick}
-            >
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              Comprar
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full border-2 border-[#FF6600] text-[#FF6600] hover:bg-orange-50 font-semibold py-4 px-6 h-14 rounded-full text-lg"
-              onClick={handleChatClick}
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Chat
-            </Button>
-          </div>
-
-          {/* Seller Info */}
-          <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-lg font-semibold text-black mb-3">Vendedor</h3>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                <span className="text-gray-600 font-medium">{product.seller.name.charAt(0).toUpperCase()}</span>
-              </div>
-              <div>
-                <div className="font-medium text-black">{product.seller.name}</div>
-                <div className="text-sm text-gray-500">
-                  Último acesso {formatLastSeen(product.seller.lastSeenMinutesAgo)}
-                </div>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              className="w-full border-black text-black hover:bg-gray-50 rounded-full py-3 h-12"
-              onClick={handleSellerProfileClick}
-            >
-              Ver perfil
-            </Button>
-          </div>
-
-          {/* Location */}
-          <div className="border-t border-gray-200 pt-6 mt-6">
-            <h3 className="text-lg font-semibold text-black mb-3">Localização</h3>
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-17%20at%2021.35.20-0AKnJXbrJU6sNuIdHnYWfKmbgVAacw.jpeg"
-                  alt="Localização"
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <div className="font-bold text-black">{city}</div>
-                <div className="text-sm text-gray-500">{product.location}</div>
-              </div>
+              {/* Chat Button */}
+              <Button
+                variant="outline"
+                className="flex-1 border-2 border-[#FF6600] text-[#FF6600] hover:bg-orange-50 font-semibold py-3 px-6 h-12 rounded-full text-base bg-white"
+                onClick={handleBuyClick}
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Chat
+              </Button>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {/* Fullscreen Image Modal - Mobile Only */}
+      {showFullscreenImage && (
+        <div className="fixed inset-0 bg-black z-[100] flex items-center justify-center sm:hidden">
+          {/* Close Button */}
+          <button
+            onClick={() => setShowFullscreenImage(false)}
+            className="absolute top-4 right-4 z-[101] bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-colors"
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          {/* Swipeable Image Container */}
+          <div
+            className="w-full h-full flex items-center justify-center overflow-hidden"
+            onTouchStart={(e) => {
+              const touch = e.touches[0]
+              setTouchStart(touch.clientX)
+            }}
+            onTouchMove={(e) => {
+              if (!touchStart) return
+              const touch = e.touches[0]
+              const diff = touchStart - touch.clientX
+
+              if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                  // Swipe left - next image
+                  setCurrentImageIndex((prev) => (prev + 1) % product.images.length)
+                } else {
+                  // Swipe right - previous image
+                  setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length)
+                }
+                setTouchStart(null)
+              }
+            }}
+            onTouchEnd={() => setTouchStart(null)}
+          >
+            <div
+              className="flex transition-transform duration-300 ease-in-out w-full h-full"
+              style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+            >
+              {product.images.map((image, index) => (
+                <div key={index} className="w-full h-full flex-shrink-0 flex items-center justify-center p-4">
+                  <Image
+                    src={image || "/placeholder.svg?height=400&width=400&text=Sem+Imagem"}
+                    alt={`${product.title} - Imagem ${index + 1}`}
+                    width={800}
+                    height={800}
+                    className="max-w-full max-h-full object-contain"
+                    priority={index === currentImageIndex}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
